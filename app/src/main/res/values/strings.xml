@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ControlRemote</string>
+    <string name="Descripcion">Todo</string>
+    <string name="Materia">Fundamentos de Microprocesadores y Microcontroladores</string>
+    <string name="Profe">Profesor: Pedro Aaron Saldaña Zepeda</string>
+    <string name="ActivarBluetooth">Bluetooth desactivado: Favor de activarlo</string>
 </resources>
