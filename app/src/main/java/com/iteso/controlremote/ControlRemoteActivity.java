@@ -66,6 +66,7 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
                 break;
         }
     }
+    
     private void TxSendData(int DataInformation){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
@@ -76,7 +77,8 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
             startActivityForResult(SendData,DataInformation);
         }
     }
-
+    
+    //Variables Globales
     private ImageButton ibLuz, ibClaxon, ibDerecha, ibAvanza, ibIzquierda, ibDetener;
     private final static int REQUEST_ENABLE_BT = 1;
     private static int Accion;
