@@ -89,6 +89,7 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
                 break;
         }
     }
+    
     private void TxSendData(int DataInformation){
         if(mBluetoothSocket != null){
             try{
@@ -99,7 +100,8 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
             }
         }
     }
-
+    
+    //Variables Globales
     private ImageButton ibLuz, ibClaxon, ibDerecha, ibAvanza, ibIzquierda, ibDetener;
     public static final String SERVICE_ID = "00001101-0000-1000-8000-00805f9b34fb"; //SPP UUID
     public static final String SERVICE_ADDRESS = "98:D3:33:80:B2:DB"; // HC-05 BT ADDRESS
