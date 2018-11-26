@@ -31,6 +31,58 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
         ibIzquierda = findViewById(R.id.ibIzquierda);
         ibDetener = findViewById(R.id.ibDetener);
 
+        ibLuz.setOnClickListener(this);
+        ibClaxon.setOnClickListener(this);
+        ibDerecha.setOnClickListener(this);
+        ibAvanza.setOnClickListener(this);
+        ibIzquierda.setOnClickListener(this);
+        ibDetener.setOnClickListener(this);
+
+        BluetoothConnections();
+    }
+
+    @Override
+    public void onClick(View v){
+
+        if(mBluetoothSocket != null){
+            switch (v.getId()){
+                case R.id.ibLuz:
+                    Accion = 4;
+                    Tools.NotificacionToast(this,"Luces",Toast.LENGTH_SHORT);
+                    TxSendData(Accion);
+                    break;
+                case R.id.ibClaxon:
+                    Accion = 5;
+                    Tools.NotificacionToast(this,"Claxón",Toast.LENGTH_SHORT);
+                    TxSendData(Accion);
+                    break;
+                case R.id.ibDerecha:
+                    Accion = 3;
+                    Tools.NotificacionToast(this,"Derecha",Toast.LENGTH_SHORT);
+                    TxSendData(Accion);
+                    break;
+                case R.id.ibAvanza:
+                    Accion = 1;
+                    Tools.NotificacionToast(this,"Avanzar",Toast.LENGTH_SHORT);
+                    TxSendData(Accion);
+                    break;
+                case R.id.ibIzquierda:
+                    Accion = 2;
+                    Tools.NotificacionToast(this,"Izquierda",Toast.LENGTH_SHORT);
+                    TxSendData(Accion);
+                    break;
+                case R.id.ibDetener:
+                    Accion = 0;
+                    Tools.NotificacionToast(this,"Detener",Toast.LENGTH_SHORT);
+                    TxSendData(Accion);
+                    break;
+            }
+        }else {
+            Tools.NotificacionToast(this, "Bluetooth HC-05 esta apagado o no esta disponible", Toast.LENGTH_LONG);
+            BluetoothConnections();
+        }
+    }
+    private void BluetoothConnections (){
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(mBluetoothAdapter == null){
             Tools.NotificacionToast(this,"Bluetooth no disponible", Toast.LENGTH_LONG);
@@ -40,64 +92,20 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
                 startActivityForResult(enableBtIntent,REQUEST_ENABLE_BT);
             }else{
                 mBluetoothDevice = mBluetoothAdapter.getRemoteDevice(SERVICE_ADDRESS);
-                ConnectThread connect = new ConnectThread(mBluetoothDevice,SERVICE_ID,mBluetoothAdapter);
+                connect = new ConnectThread(mBluetoothDevice,SERVICE_ID,mBluetoothAdapter);
                 connect.start();
                 mBluetoothSocket = connect.getOutSocket();
             }
         }
-
-        ibLuz.setOnClickListener(this);
-        ibClaxon.setOnClickListener(this);
-        ibDerecha.setOnClickListener(this);
-        ibAvanza.setOnClickListener(this);
-        ibIzquierda.setOnClickListener(this);
-        ibDetener.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.ibLuz:
-                Accion = 4;
-                Tools.NotificacionToast(this,"Luces",Toast.LENGTH_SHORT);
-                TxSendData(Accion);
-                break;
-            case R.id.ibClaxon:
-                Accion = 5;
-                Tools.NotificacionToast(this,"Claxón",Toast.LENGTH_SHORT);
-                TxSendData(Accion);
-                break;
-            case R.id.ibDerecha:
-                Accion = 3;
-                Tools.NotificacionToast(this,"Derecha",Toast.LENGTH_SHORT);
-                TxSendData(Accion);
-                break;
-            case R.id.ibAvanza:
-                Accion = 1;
-                Tools.NotificacionToast(this,"Avanzar",Toast.LENGTH_SHORT);
-                TxSendData(Accion);
-                break;
-            case R.id.ibIzquierda:
-                Accion = 2;
-                Tools.NotificacionToast(this,"Izquierda",Toast.LENGTH_SHORT);
-                TxSendData(Accion);
-                break;
-            case R.id.ibDetener:
-                Accion = 0;
-                Tools.NotificacionToast(this,"Detener",Toast.LENGTH_SHORT);
-                TxSendData(Accion);
-                break;
-        }
     }
     
     private void TxSendData(int DataInformation){
-        if(mBluetoothSocket != null){
-            try{
-                OutputStream outData = mBluetoothSocket.getOutputStream();
-                outData.write(DataInformation);
-            }catch (IOException ex){
-                ex.getStackTrace();
-            }
+        try{
+            OutputStream outData = mBluetoothSocket.getOutputStream();
+            outData.write(DataInformation);
+        }catch (IOException ex){
+            ex.getStackTrace();
+            Tools.NotificacionToast(this,ex.getMessage(), Toast.LENGTH_LONG);
         }
     }
     
@@ -110,4 +118,5 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
     private BluetoothDevice mBluetoothDevice = null;
     private BluetoothAdapter mBluetoothAdapter = null;
     private static int Accion;
+    ConnectThread connect;
 }
