@@ -29,6 +29,7 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
         ibAvanza = findViewById(R.id.ibAvanza);
         ibIzquierda = findViewById(R.id.ibIzquierda);
         ibDetener = findViewById(R.id.ibDetener);
+        ibReversa = findViewById(R.id.ibReversa);
 
         ibLuz.setOnClickListener(this);
         ibClaxon.setOnClickListener(this);
@@ -36,6 +37,7 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
         ibAvanza.setOnClickListener(this);
         ibIzquierda.setOnClickListener(this);
         ibDetener.setOnClickListener(this);
+        ibReversa.setOnClickListener(this);
         Tools.NotificacionToast(this,"Se crea la conexión con Bluetooth HC-05", Toast.LENGTH_SHORT);
         BluetoothConnections();
     }
@@ -67,6 +69,11 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
                 case R.id.ibIzquierda:
                     Accion = "3";
                     Tools.NotificacionToast(this,"Izquierda",Toast.LENGTH_SHORT);
+                    TxSendData(Accion);
+                    break;
+                case R.id.ibReversa:
+                    Accion = "6";
+                    Tools.NotificacionToast(this,"Reversa",Toast.LENGTH_SHORT);
                     TxSendData(Accion);
                     break;
                 case R.id.ibDetener:
@@ -113,7 +120,7 @@ public class ControlRemoteActivity extends AppCompatActivity implements View.OnC
     }
     
     //Variables Globales
-    private ImageButton ibLuz, ibClaxon, ibDerecha, ibAvanza, ibIzquierda, ibDetener;
+    private ImageButton ibLuz, ibClaxon, ibDerecha, ibAvanza, ibIzquierda, ibDetener, ibReversa;
     public static final String SERVICE_ID = "00001101-0000-1000-8000-00805f9b34fb"; //SPP UUID
     public static final String SERVICE_ADDRESS = "98:D3:33:80:B2:DB"; // HC-05 BT ADDRESS
     private final static int REQUEST_ENABLE_BT = 1;
